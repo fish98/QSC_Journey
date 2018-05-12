@@ -1,28 +1,29 @@
-const os = require('os');
-const path = require('path');
-const Koa = require('koa');
-const fs = require('fs');
-const koaBody = require('koa-body');
+const inspect = require('util').inspect
+const path = require('path')
+const fs = require('fs')
+const Busboy = require('busboy')
 
-const app = new Koa();
+const busboy = new Busboy()
 
-const main = async function(ctx) {
-  const tmpdir = './uploads'
-  const filePaths = [];
-  const files = ctx.request.body.files || {};
+busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    console.log(`On Loading File [${fieldname}]: filename: ${filename}`)
 
-  for (let key in files) {
-    const file = files[key];
-    const filePath = path.join(tmpdir, file.name);
-    const reader = fs.createReadStream(file.path);
-    const writer = fs.createWriteStream(filePath);
-    reader.pipe(writer);
-    filePaths.push(filePath);
-  }
+file.pipe('data', (data) => {
+    console.log(`File [${fieldname}] got ${data.length} bytes`)
+})
 
-  ctx.body = filePaths;
-};
+file.on('end', function() {
+    console.log(`File [${fieldname}] Finished`)
+  })
+})
 
-app.use(koaBody({ multipart: true }));
-app.use(main);
-app.listen(3000);
+busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) {
+    console.log(`Field [${fieldname}]: value: ${inspect(val)}`)
+  })
+  
+  busboy.on('finish', function() {
+    console.log('Done parsing form!')
+    res.writeHead(303, { Connection: 'close', Location: '/' })
+    res.end()
+  })
+  req.pipe(busboy)
