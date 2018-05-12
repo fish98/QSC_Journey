@@ -9,17 +9,18 @@ class Input extends React.Component{
         this.changeText = this.changeText.bind(this)
     }
 
-    changeText(e){
-        this.setState({
+    async changeText(e){
+        await this.setState({
             text: e.target.value
         })
+
         this.props.changeInput(this.state.text)
     }
 
     render(){
         return(
             <div>
-                <input onChange = {this.changeText} type = "text" value = {this.state.text} placeholder = '请快填写你的信息'></input>
+                <input type = "text" value = {this.state.text} onChange = {this.changeText} placeholder = '请快填写你的信息'></input>
             </div>
         )
     }

@@ -3,9 +3,9 @@ import './App.css'
 import Input from './input'
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
-import fetch from 'whatwg-fetch'
+import 'whatwg-fetch'
 
-const url = `http://localhost:3000`
+const url = `http://localhost:3030`
 
 class App extends Component {
 
@@ -26,17 +26,16 @@ class App extends Component {
       })
     }
 
-    sendRequest(){
-      // fetch(url, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({
-      //     name: this.state.name
-      //   })
-      // })
-      console.log(this.state.name)
+    async sendRequest(){
+      await fetch(url, {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // },
+        body: JSON.stringify({
+          name: this.state.name
+        })
+      })
     }
 
   render() {
