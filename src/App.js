@@ -4,8 +4,12 @@ import Input from './input'
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
 import 'whatwg-fetch'
+import sweet from 'sweetalert'
+
 
 const url = `http://localhost:3030`
+
+let fileNum = 0
 
 class App extends Component {
 
@@ -19,6 +23,8 @@ class App extends Component {
     this.sendRequest = this.sendRequest.bind(this)
     this.changeInput = this.changeInput.bind(this)
     this.handleChange = this.handleChange.bind(this)
+
+    this.editorInstance = null
   }
 
     changeInput (input) {
@@ -34,16 +40,54 @@ class App extends Component {
     }
 
     async sendRequest(){
-      await fetch(url, {
+      // await fetch(url, {
+      //   method: 'POST',
+      //   // headers: {
+      //   //   'Content-Type': 'application/json'
+      //   // },
+      //   body: JSON.stringify({
+      //     name: this.state.name,
+      //     text: this.state.text
+      //   })
+      // })
+    }
+
+    uploadFn = (param) => {
+
+      const formData = new FormData()
+
+      for(var name in param) {
+        formData.append(name, param[name]);
+      }
+      fetch(url, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
-        body: JSON.stringify({
-          name: this.state.name,
-          text: this.state.text
-        })
-      })
+        body: formData
+      }).then((res) => {
+        console.log(res)
+        if(res.status === 200){
+          successFn(res)
+        } else{
+          errorFn(res)
+        }
+      }
+    )
+      //const mediaLibrary = this.editorInstance.getMediaLibraryInstance()
+
+      //  sweet("OK", "Upload success!", "success");
+        const successFn = (response) => {
+          param.success({
+            url: response.body
+            })
+         }
+      // }
+      //console.log(mediaLibrary)
+      const progressFn = (event) => {
+        param.progress(event.loaded / event.total * 100)
+      }
+
+      const errorFn = (response) => {
+        sweet("Oops!", "Something went wrong!", "error")
+      }
     }
 
   render() {
@@ -59,7 +103,7 @@ class App extends Component {
         'text-align', 'headings','media'
       ],
       media: {
-        //uoloadFn: upload()
+        uploadFn: this.uploadFn
       }
     }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import sweet from 'sweetalert'
 // 引入编辑器以及编辑器样式
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
