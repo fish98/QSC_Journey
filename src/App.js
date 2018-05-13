@@ -12,17 +12,24 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      name: ''
+      name: '',
+      text: ''
     }
 
     this.sendRequest = this.sendRequest.bind(this)
     this.changeInput = this.changeInput.bind(this)
-
+    this.handleChange = this.handleChange.bind(this)
   }
 
     changeInput (input) {
       this.setState({
         name: input
+      })
+    }
+
+    handleChange = (content) => {
+      this.setState({
+        text: content
       })
     }
 
@@ -33,7 +40,8 @@ class App extends Component {
         //   'Content-Type': 'application/json'
         // },
         body: JSON.stringify({
-          name: this.state.name
+          name: this.state.name,
+          text: this.state.text
         })
       })
     }
@@ -46,7 +54,7 @@ class App extends Component {
       placeholder: '请开始的表演',
       // initialContent: '<h1>TTFish</h1>',
       onChange: this.handleChange,
-      onRawChange: this.handleRawChange,
+      // onRawChange: this.handleRawChange,
       controls: [
         'text-align', 'headings','media'
       ],
@@ -72,4 +80,3 @@ class App extends Component {
 }
 
 export default App;
-
