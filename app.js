@@ -6,16 +6,12 @@ const cors = require('@koa/cors')
 const list = []
 
 const main = async function(ctx, next) {
-  const body = ctx.request.body;
- // console.log(ctx)
-  ctx.body = { 
-    name: body.name,
-    text: body.text
-   };
+const body = ctx.request.body;
+// ctx.body = { name: body.name };
   list.push(body)
- //  console.log(ctx.request.body.fields)
-  ctx.body = "Upload information Success!"// ctx.request.body.fields
-  console.log(list)
+//  console.log(ctx.request.body.fields)
+//   ctx.body = "Upload information Success!"// ctx.request.body.fields
+//  console.log(list)
   await next();
 };
 
@@ -25,5 +21,3 @@ app.use(koaBody({
 app.use(cors())
 app.use(main);
 app.listen(3030);
-
-console.log("Server Start")
