@@ -28,8 +28,10 @@ const main = async function(ctx) {
     reader.pipe(writer);
     filePaths.push(filePath);
     console.log(`Upload image ${file.name} as ${imageName} OK`)
+    console.log(filePaths)
   }
   ctx.body = filePaths;
+  console.log(ctx.response)
 };
 
 app.use(koaBody({ multipart: true }));
