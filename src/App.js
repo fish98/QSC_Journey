@@ -75,9 +75,11 @@ class App extends Component {
 
       //  sweet("OK", "Upload success!", "success");
         const successFn = (response) => {
-          param.success({
-            url: response.body
-            })
+          response.json().then(txt => {
+            param.success({
+              url: `http://localhost/${txt}`
+              })
+          })
          }
       // }
       //console.log(mediaLibrary)
