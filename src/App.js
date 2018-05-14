@@ -6,10 +6,9 @@ import 'braft-editor/dist/braft.css'
 import 'whatwg-fetch'
 import sweet from 'sweetalert'
 
+const isMobile = window.innerWidth <= 600
 
 const url = `http://localhost:3030`
-
-let fileNum = 0
 
 class App extends Component {
 
@@ -26,6 +25,14 @@ class App extends Component {
 
     this.editorInstance = null
   }
+
+    hConfig = {
+      position: 'relative',
+    }
+
+    buttonStyle = {
+
+    }
 
     changeInput (input) {
       this.setState({
@@ -97,7 +104,7 @@ class App extends Component {
     const editorProps = {
       height: 500,
       contentFormat: 'html',
-      placeholder: '请开始的表演',
+      placeholder: '单击此处开始写作',
       // initialContent: '<h1>TTFish</h1>',
       onChange: this.handleChange,
       // onRawChange: this.handleRawChange,
@@ -112,13 +119,17 @@ class App extends Component {
     return (
       <div className="App">
        <div>
-         <h1> 征 文 </h1>
-         <Input changeInput = {input => this.changeInput(input)}/> 
-         <div style={{'height': '50px'}}></div>
-          <div style={{"border": "1px solid black"}}>
+         <h1 style={this.hConfig}> 征文 </h1>
+         <div id = 'bg'></div>
+         <div style={{'height': '120px'}}></div>
+          <div style={{"border": "2px solid black 50%"
+        }}>
            <BraftEditor {...editorProps}/>
          </div>
-         <button onClick = {this.sendRequest}>Submit</button>
+         <div style={{'display':'flex'}}>
+         <Input changeInput = {input => this.changeInput(input)}/> 
+         <button onClick = {this.sendRequest} style={this.buttonStyle}>Submit</button>
+         </div>
          </div>
       </div>
     );

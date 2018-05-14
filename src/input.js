@@ -5,9 +5,20 @@ class Input extends React.Component{
         super(props)   
         this.state = {
             text : '',
+            check: ''
         } 
         this.changeText = this.changeText.bind(this)
     }
+
+    inputConfig = {
+        width: '400px',
+        height: '36px',
+        display: 'reletive',
+        left: '40%',
+        textAlign: 'center',
+        fontSize:'17px',
+        transition: '1s',
+        }
 
     async changeText(e){
         await this.setState({
@@ -20,7 +31,8 @@ class Input extends React.Component{
     render(){
         return(
             <div>
-                <input type = "text" value = {this.state.text} onChange = {this.changeText} placeholder = '请快填写你的信息'></input>
+                <input type = "text" value = {this.state.text} onChange = {this.changeText} placeholder = '请留下您的联系方式' style={this.inputConfig}></input>
+                <div className = 'type'></div>
             </div>
         )
     }

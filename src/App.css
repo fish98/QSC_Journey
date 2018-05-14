@@ -1,8 +1,46 @@
-.App {
+/* .App {
   text-align: center;
+} */
+
+/* #root > div > div > div:nth-child(2) > input[type="text"] {
+  width: '200px'
+} */
+body{
+
 }
 
-.App-logo {
+#bg {
+  background-image: url('./image/bg.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  align: center;
+  height: 200px;
+  width: 100%;
+}
+
+h1{
+  font-size: 36px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(3, 3, 3)
+}
+
+input:hover{
+  background: rgba(216, 216, 235, 0.801);
+}
+
+input:focus{
+  outline: none;
+}
+
+
+#root > div > div > div:nth-child(2){
+  position: absolute;
+  left: 44%;
+  top:6%
+}
+
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
@@ -25,4 +63,4 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
+} */
