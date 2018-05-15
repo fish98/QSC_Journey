@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
-import './App.css'
-import Input from './input'
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
 import 'whatwg-fetch'
 import sweet from 'sweetalert'
 
-const isMobile = window.innerWidth <= 600
+import './App.css'
+import Input from './input'
+import Footer from './footer'
+import chick from './image/chick.png'
 
 const url = `http://localhost:3030`
+
+let isMobile = false
+
+if(window.innerWidth <= 600){
+    isMobile = true
+}
 
 class App extends Component {
 
@@ -16,7 +23,7 @@ class App extends Component {
     super()
     this.state = {
       name: '',
-      text: ''
+      text: '',
     }
 
     this.sendRequest = this.sendRequest.bind(this)
@@ -26,12 +33,50 @@ class App extends Component {
     this.editorInstance = null
   }
 
+    chickStyle = (!isMobile) ? {
+        'align': 'center',
+        'width': '200px',
+        'height': '200px',
+        'position': 'absolute',
+        'left': '44%',
+        'top':'8%'
+    } : {
+      'align': 'center',
+      'width': '200px',
+      'height': '200px',
+      'position': 'relative',
+      'left': '20%',
+    }
+
     hConfig = {
       position: 'relative',
     }
 
-    buttonStyle = {
+    blankStyle = (!isMobile) ? {
+      height: '120px'
+    } : {}
 
+    buttonStyle = {
+      background:'black',
+      border: '0 solid',
+      fontSize: '18px',
+      color: 'white',
+      fontWidth: 'bold',  
+      width: '100px',
+      fontWeight:'bold'
+    }
+
+    buttomBox =(!isMobile) ? {
+      'display':'flex',
+      'position': 'relative',
+      'left': '32%',
+    } : {
+      'display':'flex',
+    }
+
+    questionStyle = {
+      fontWeight: 'bold',
+      fontSize: '18px'
     }
 
     changeInput (input) {
@@ -116,20 +161,28 @@ class App extends Component {
       }
     }
 
+    console.log(this.state.isMobile)
+
     return (
       <div className="App">
        <div>
          <h1 style={this.hConfig}> 征文 </h1>
-         <div id = 'bg'></div>
-         <div style={{'height': '120px'}}></div>
+         {/* <div style={this.chickStyle}></div> */}
+         <img src={chick} style={(() => {if(!this.state.isMobile){return this.chickStyle}})()} />
+         <div style={this.blankStyle}></div>
+         <div style = {this.questionStyle}> 
+         <p>漫画结局作为一个续写题，请广大ZJU潮ers续写夺奖。</p><p>续写内容包括但不限于人类战胜人工智能的方法和方式，以及人工智能今后与人类的关系
+         </p>
+         </div>
           <div style={{"border": "2px solid black 50%"
         }}>
            <BraftEditor {...editorProps}/>
          </div>
-         <div style={{'display':'flex'}}>
+         <div style={this.buttomBox}>
          <Input changeInput = {input => this.changeInput(input)}/> 
-         <button onClick = {this.sendRequest} style={this.buttonStyle}>Submit</button>
+         <button onClick = {this.sendRequest} style={this.buttonStyle}>提 交</button>
          </div>
+         <Footer />
          </div>
       </div>
     );

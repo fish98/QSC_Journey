@@ -1,23 +1,35 @@
 import React from 'react'
 
+
+let isMobile = false
+
+if(window.innerWidth <= 600){
+    isMobile = true
+}
+
 class Input extends React.Component{
     constructor(props){
         super(props)   
         this.state = {
             text : '',
-            check: ''
         } 
         this.changeText = this.changeText.bind(this)
     }
 
-    inputConfig = {
+    inputConfig = (!isMobile) ? {
         width: '400px',
         height: '36px',
         display: 'reletive',
         left: '40%',
         textAlign: 'center',
-        fontSize:'17px',
-        transition: '1s',
+        fontSize:'16px',
+        // transition: '1s',
+        // background: 'rgba(216, 216, 235, 0.801)',
+        } : {
+            width: '100',
+            height: '36px',
+            textAlign: 'center',
+            fontSize:'16px',
         }
 
     async changeText(e){

@@ -6,16 +6,7 @@
   width: '200px'
 } */
 body{
-
-}
-
-#bg {
-  background-image: url('./image/bg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  align: center;
-  height: 200px;
-  width: 100%;
+overflow-x: hidden
 }
 
 h1{
@@ -26,7 +17,7 @@ h1{
 }
 
 input:hover{
-  background: rgba(216, 216, 235, 0.801);
+  background: white
 }
 
 input:focus{
