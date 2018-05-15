@@ -92,16 +92,23 @@ class App extends Component {
     }
 
     async sendRequest(){
-      // await fetch(url, {
-      //   method: 'POST',
-      //   // headers: {
-      //   //   'Content-Type': 'application/json'
-      //   // },
-      //   body: JSON.stringify({
-      //     name: this.state.name,
-      //     text: this.state.text
-      //   })
-      // })
+      await fetch(url, {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // },
+        body: JSON.stringify({
+          name: this.state.name,
+          text: this.state.text
+        })
+      }).then(res => {
+        if(res.status === '200'){
+          sweet("Congratulations!", "Upload success!", "success");
+        }
+        else {
+          sweet("Oops", "Upload failed! Please check your network", "error");
+        }
+      })
     }
 
     uploadFn = (param) => {
@@ -125,7 +132,6 @@ class App extends Component {
     )
       //const mediaLibrary = this.editorInstance.getMediaLibraryInstance()
 
-      //  sweet("OK", "Upload success!", "success");
         const successFn = (response) => {
           response.json().then(txt => {
             param.success({
