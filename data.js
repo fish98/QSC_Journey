@@ -2,20 +2,48 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const app = new Koa()
 const cors = require('@koa/cors')
+const config = require('./config')
 
-const list = []
+//const list = []
+
+// Operate the Database
+
+async function OperateDataBase () {
+
+  const sequelize = new Sequelize(`mysql://${config.username}:${config.password}@${config.host}:${config.dataBasePort}/${database}`);
+  
+  let textData = sequelize.define('textData', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey:  true
+    },
+    Contact: {
+      type: Sequelize.STRING(30),
+    },
+    Textarea: {   
+      type: Sequelize.TEXT
+     }
+    }, {
+      timestamps: false 
+    })
+  }
+
+
+// Receive the data from frontEnd
 
 const main = async function(ctx, next) {
   const body = ctx.request.body;
- // console.log(ctx)
+
   ctx.body = { 
-    name: body.name,
+    contact: body.name,
     text: body.text
    };
-  list.push(body)
+  //list.push(body)
  //  console.log(ctx.request.body.fields)
   ctx.body = "Upload information Success!"// ctx.request.body.fields
-  console.log(list)
+  await OperateDataBase()
+
+  //console.log(list)
   await next();
 };
 
@@ -24,6 +52,6 @@ app.use(koaBody({
 }));
 app.use(cors())
 app.use(main);
-app.listen(3030);
+app.listen(config.port);
 
-console.log("Server Start")
+console.log("Server Receiving Data")
