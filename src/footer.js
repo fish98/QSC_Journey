@@ -35,7 +35,7 @@ class Footer extends React.Component{
                     right: '10%',
                     display: isShow
                 }}>
-                  <img src="https://box.zjuqsc.com/assets/img/qsc-footer.png" />
+                  <img src="https://box.zjuqsc.com/assets/img/qsc-footer.png" alt="footer" />
                 </a> 
             </div>
             <div style={this.blankStyle}></div>

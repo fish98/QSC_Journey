@@ -92,11 +92,9 @@ class App extends Component {
     }
 
     async sendRequest(){
+      console.log(this.state)
       await fetch(url, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
         body: JSON.stringify({
           name: this.state.name,
           text: this.state.text
@@ -167,14 +165,12 @@ class App extends Component {
       }
     }
 
-    console.log(this.state.isMobile)
-
     return (
       <div className="App">
        <div>
          <h1 style={this.hConfig}> 征文 </h1>
          {/* <div style={this.chickStyle}></div> */}
-         <img src={chick} style={(() => {if(!this.state.isMobile){return this.chickStyle}})()} />
+         <img src={chick} alt="chick" style={(() => {if(!this.state.isMobile){return this.chickStyle}})()} />
          <div style={this.blankStyle}></div>
          <div style = {this.questionStyle}> 
          <p>漫画结局作为一个续写题，请广大ZJU潮ers续写夺奖。</p><p>续写内容包括但不限于人类战胜人工智能的方法和方式，以及人工智能今后与人类的关系
