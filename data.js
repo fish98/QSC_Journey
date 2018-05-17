@@ -2,56 +2,69 @@ const Koa = require('koa')
 const koaBody = require('koa-body')
 const app = new Koa()
 const cors = require('@koa/cors')
+const Sequelize = require('sequelize')
 const config = require('./config')
 
-//const list = []
+// Receive the data from frontEnd
 
-// Operate the Database
+const main = async function (ctx, next) {
 
-async function OperateDataBase () {
+  const body = ctx.request.body;
 
-  const sequelize = new Sequelize(`mysql://${config.username}:${config.password}@${config.host}:${config.dataBasePort}/${database}`);
-  
+  ctx.body = {
+    contact: body.name,
+    text: body.text
+  };
+
+  ctx.body = "Upload information Success!" // ctx.request.body.fields
+
+  /******   Database insert function       ******/
+
+  // Init the Database
+
+  const sequelize = new Sequelize('mysql://root:123456@localhost:3306/ttfish');
+
+  await sequelize.authenticate()
+
+  console.log('Connection has been established successfully.')
+
+  // Operate DataBase
+
   let textData = sequelize.define('textData', {
     id: {
       type: Sequelize.INTEGER,
-      primaryKey:  true
+      primaryKey: true
     },
     Contact: {
       type: Sequelize.STRING(30),
     },
-    Textarea: {   
+    Textarea: {
       type: Sequelize.TEXT
-     }
-    }, {
-      timestamps: false 
-    })
-  }
+    }
+  }, {
+    timestamps: false
+  })
 
+  let fish = JSON.parse(body)
+  console.log(fish.text)
 
-// Receive the data from frontEnd
+  let res = await textData.create({
+    Contact: fish.contact,
+    Textarea: fish.text,
+  })
 
-const main = async function(ctx, next) {
-  const body = ctx.request.body;
+  console.log(JSON.stringify(res))
 
-  ctx.body = { 
-    contact: body.name,
-    text: body.text
-   };
-  //list.push(body)
- //  console.log(ctx.request.body.fields)
-  ctx.body = "Upload information Success!"// ctx.request.body.fields
-  await OperateDataBase()
-
-  //console.log(list)
   await next();
+
 };
 
 app.use(koaBody({
   multipart: true
 }));
+
 app.use(cors())
 app.use(main);
-app.listen(config.port);
+app.listen(config.dataPort);
 
 console.log("Server Receiving Data")

@@ -7,36 +7,30 @@ const cors = require('@koa/cors')
 const config = require('./config')
 
 const app = new Koa();
-let fish = 0
 
-const main = async function(ctx) {
+const main = async function (ctx) {
 
-  const tmpdir = './image'
+  const tmpdir = config.imgDir
   const filePaths = [];
   const files = ctx.request.body.files || {};
 
   for (let key in files) {
     const file = files[key];
 
-    fish = fish + 1
-
-    let tail = file.name.substr(-4)
-    let imageName = `${fish}${tail}`
-
-    const filePath = path.join(tmpdir, imageName);
+    const filePath = path.join(tmpdir, file.name);
     const reader = fs.createReadStream(file.path);
     const writer = fs.createWriteStream(filePath);
     reader.pipe(writer);
     filePaths.push(filePath);
-    console.log(`Upload image ${file.name} as ${imageName} OK`)
-    console.log(filePaths)
+    console.log(`Upload image ${file.name} OK`)
   }
   ctx.body = filePaths;
-  console.log(ctx.response)
 };
 
-app.use(koaBody({ multipart: true }));
+app.use(koaBody({
+  multipart: true
+}));
 app.use(cors())
 app.use(main);
 console.log("Start Receiving Images")
-app.listen(config.port);
+app.listen(config.imagePort);
