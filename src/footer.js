@@ -9,9 +9,6 @@ if(window.innerWidth <= 600){
 }
 
 class Footer extends React.Component{
-    constructor(props){
-        super(props)
-     }
 
     blankStyle = {
         height : '15px',

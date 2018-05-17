@@ -7,9 +7,8 @@ import sweet from 'sweetalert'
 import './App.css'
 import Input from './input'
 import Footer from './footer'
+import config from './config'
 import chick from './image/chick.png'
-
-const url = `http://localhost:3030`
 
 let isMobile = false
 
@@ -22,7 +21,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      name: '',
+      contact: '',
       text: '',
     }
 
@@ -81,7 +80,7 @@ class App extends Component {
 
     changeInput (input) {
       this.setState({
-        name: input
+        contact: input
       })
     }
 
@@ -92,20 +91,19 @@ class App extends Component {
     }
 
     async sendRequest(){
-      console.log(this.state)
-      await fetch(url, {
+      await fetch(`${config.url}${config.dataPort}`, {
         method: 'POST',
         body: JSON.stringify({
-          name: this.state.name,
+          contact: this.state.contact,
           text: this.state.text
         })
       }).then(res => {
-        if(res.status === '200'){
+        if(res.status === 200){
           sweet("Congratulations!", "Upload success!", "success");
         }
         else {
           sweet("Oops", "Upload failed! Please check your network", "error");
-        }
+        } 
       })
     }
 
@@ -116,7 +114,7 @@ class App extends Component {
       for(var name in param) {
         formData.append(name, param[name]);
       }
-      fetch(url, {
+      fetch(`${config.url}${config.imagePort}`, {
         method: 'POST',
         body: formData
       }).then((res) => {
@@ -128,7 +126,6 @@ class App extends Component {
         }
       }
     )
-      //const mediaLibrary = this.editorInstance.getMediaLibraryInstance()
 
         const successFn = (response) => {
           response.json().then(txt => {
@@ -137,8 +134,7 @@ class App extends Component {
               })
           })
          }
-      // }
-      //console.log(mediaLibrary)
+
       const progressFn = (event) => {
         param.progress(event.loaded / event.total * 100)
       }
@@ -167,25 +163,23 @@ class App extends Component {
 
     return (
       <div className="App">
-       <div>
-         <h1 style={this.hConfig}> 征文 </h1>
-         {/* <div style={this.chickStyle}></div> */}
-         <img src={chick} alt="chick" style={(() => {if(!this.state.isMobile){return this.chickStyle}})()} />
-         <div style={this.blankStyle}></div>
-         <div style = {this.questionStyle}> 
-         <p>漫画结局作为一个续写题，请广大ZJU潮ers续写夺奖。</p><p>续写内容包括但不限于人类战胜人工智能的方法和方式，以及人工智能今后与人类的关系
-         </p>
-         </div>
-          <div style={{"border": "2px solid black 50%"
-        }}>
+        <div>
+          <h1 style={this.hConfig}> 征文 </h1>
+          <img src={chick} alt="chick" style={(() => {if(!this.state.isMobile){return this.chickStyle}})()} />
+          <div style={this.blankStyle}></div>
+          <div style = {this.questionStyle}> 
+            <p>漫画结局作为一个续写题，请广大ZJU潮ers续写夺奖。</p><p>续写内容包括但不限于人类战胜人工智能的方法和方式，以及人工智能今后与人类的关系
+            </p>
+          </div>
+          <div style={{"border": "2px solid black 50%"}}>
            <BraftEditor {...editorProps}/>
          </div>
          <div style={this.buttomBox}>
-         <Input changeInput = {input => this.changeInput(input)}/> 
-         <button onClick = {this.sendRequest} style={this.buttonStyle}>提 交</button>
-         </div>
-         <Footer />
-         </div>
+            <Input changeInput = {input => this.changeInput(input)}/> 
+            <button onClick = {this.sendRequest} style={this.buttonStyle}>提 交</button>
+          </div>
+          <Footer />
+        </div>
       </div>
     );
   }
