@@ -5,6 +5,12 @@ const cors = require('@koa/cors')
 const Sequelize = require('sequelize')
 const config = require('./config')
 
+const username = config.username
+const passwd = config.password
+const url = config.host
+const port = config.dataBasePort
+const table = config.database
+
 // Receive the data from frontEnd
 
 const main = async function (ctx, next) {
@@ -22,7 +28,7 @@ const main = async function (ctx, next) {
 
   // Init the Database
 
-  const sequelize = new Sequelize('mysql://root:123456@localhost:3306/ttfish');
+  const sequelize = new Sequelize(`mysql://${username}:${passwd}@${url}:${port}/${table}`);
 
   await sequelize.authenticate()
 

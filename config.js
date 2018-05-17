@@ -9,7 +9,7 @@ module.exports = config = {
 
     // Database Config
 
-    host: 'localhost',
+    host: 'http://localhost',
     database: 'ttfish',
     username: 'root',
     password: '123456',
