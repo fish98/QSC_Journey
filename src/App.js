@@ -133,6 +133,8 @@ class App extends Component {
               url: `http://localhost/${txt}`
               })
           })
+          setTimeout(2000)
+          windows.location = config.navSite
          }
 
       const progressFn = (event) => {
