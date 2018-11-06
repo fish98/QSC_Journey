@@ -1,13 +1,13 @@
 ## A simple full stack project for Manage Journey Competetion
 
-> Based on React and Koa 
+Based on React and Koa 
 
-> Database => sequelize.js
+Database => sequelize.js
 
-> Require package Braft Editor
+Require package Braft Editor
 
-> Use MariaDB for storage
+Use MariaDB for storage
 
-Finished on May 16th
+Finish on 2017.5.16
 
-TTFISH@1.0.0
+TTFISH
